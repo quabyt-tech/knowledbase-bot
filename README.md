@@ -5,7 +5,7 @@ Knowledgebase Bot source for the blog here: https://quabyt.com/blog/democratizin
 
 Rename ```.env.template``` to ```.env``` and add your Cohere API key
 
-Create & activate virtual env (linux)
+Create & activate virtual env (linux). For other OS's check [here](https://docs.python.org/3/library/venv.html)
 ```
 python -m venv venv
 source venv/bin/activate
