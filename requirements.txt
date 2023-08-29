@@ -1,0 +1,13 @@
+python-dotenv
+cohere
+numpy
+langchain
+docx2txt
+unstructured
+markdown
+chromadb
+sentence_transformers
+pypdf
+tqdm
+gradio==3.40.0
+
