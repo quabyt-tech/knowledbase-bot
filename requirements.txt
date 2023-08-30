@@ -3,6 +3,7 @@ cohere
 numpy
 langchain
 docx2txt
+python-docx
 unstructured
 markdown
 chromadb

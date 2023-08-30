@@ -9,6 +9,7 @@ from langchain.document_loaders import (
     UnstructuredMarkdownLoader,
     PyPDFLoader,
     Docx2txtLoader,
+    UnstructuredWordDocumentLoader
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import constants
@@ -37,7 +38,7 @@ def load_documents_from_files(documents_directory: str) -> List[Document]:
             chunks = chunk(pdf_docs)
             documents.extend(chunks)
         elif file.endswith(".docx"):
-            loader = Docx2txtLoader(
+            loader = UnstructuredWordDocumentLoader(
                 file_path
             )  # try UnstructuredWordDocumentLoader as well
             word_docs = loader.load()

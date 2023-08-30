@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "knowledbase-bot"
+version = "0.1.0"
+description = "Knowledgebase bot will LLMs"
+authors = ["Pushpendra Singh <pushsn@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+cohere = "^4.21"
+numpy = "^1.25.2"
+langchain = "^0.0.276"
+chromadb = "^0.4.8"
+tqdm = "^4.66.1"
+gradio = "^3.41.2"
+pypdf = "^3.15.4"
+unstructured = "^0.10.8"
+markdown = "^3.4.4"
+python-docx = "^0.8.11"
+sentence_transformers = "^2.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

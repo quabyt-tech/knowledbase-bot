@@ -1,0 +1,17 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "editor.formatOnSave": true,
+    "python.pythonPath": "/venv/bin/python",
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:kb-bot}/chromadb/chroma.sqlite3",
+            "name": "chroma",
+            "group": "sqlite"
+        }
+    ]
+}

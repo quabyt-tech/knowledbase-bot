@@ -2,7 +2,7 @@ import os
 import chromadb
 from chromadb.utils import embedding_functions
 import constants
-import gradio as gr
+import gradio
 import cohere
 from dotenv import load_dotenv
 
@@ -64,25 +64,28 @@ def chat(query, history):
     prompt = template.format(question=query, summaries=summaries)
 
     response = cohere_client.chat(
-        message=prompt, temperature=0.5, chat_history=history_cohere_format
+        message=prompt,
+        temperature=0,  # chat_history=history_cohere_format
     )
     return response.text
 
 
-gr.ChatInterface(
+chat_interface = gradio.ChatInterface(
     chat,
-    chatbot=gr.Chatbot(height=500),
-    textbox=gr.Textbox(placeholder="Ask me a question", container=True, scale=7),
+    chatbot=gradio.Chatbot(height=500),
+    textbox=gradio.Textbox(placeholder="Ask me a question", container=True, scale=7),
     title="KB Bot",
-    description="Ask questions about accounting, people policies, architecture guidelines and get response from the knowledge base",
+    description="Ask questions about accounting, leadership, architecture guidelines and get response from the knowledge base",
     theme="default",
     examples=[
         "Tell me about swimlanes in architecture guidelines",
         "How to invoice accounting?",
-        "What is the open door policy?",
+        "Give some examples of actions from managers of one",
     ],
     cache_examples=True,
     retry_btn=None,
     undo_btn="Delete Previous",
     clear_btn="Clear",
-).launch()
+)
+
+chat_interface.launch()

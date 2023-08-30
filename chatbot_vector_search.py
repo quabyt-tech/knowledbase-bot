@@ -17,12 +17,12 @@ def get_store_response(message) -> str:
         name=collection_name, embedding_function=sentence_transformer_ef
     )  # use the same embedding function that was used when docements were saved
 
-    results = collection.query(query_texts=[f"{message}"], n_results=1)
+    results = collection.query(query_texts=[f"{message}"], n_results=5)
 
     if results["documents"]:
         all_documents = ""
         for i, doc in enumerate(results["documents"]):
-            doc_text = f"\n\nNEW DOCUMENT\n\n".join(doc)
+            doc_text = f"\n\n-----------------------------+----------------------------------\n\n".join(doc)
             all_documents += doc_text + "\n\n"
         return all_documents
     else:
@@ -44,7 +44,7 @@ gr.ChatInterface(
     examples=[
         "Tell me about swimlanes in architecture guidelines",
         "How to invoice accounting?",
-        "What is the open door policy?",
+        "Give some examples of actions from managers of one",
     ],
     cache_examples=True,
     retry_btn=None,
