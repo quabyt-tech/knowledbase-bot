@@ -8,8 +8,7 @@ from langchain.schema import Document
 from langchain.document_loaders import (
     UnstructuredMarkdownLoader,
     PyPDFLoader,
-    Docx2txtLoader,
-    UnstructuredWordDocumentLoader
+    UnstructuredWordDocumentLoader,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import constants
@@ -25,6 +24,13 @@ def chunk(docs: List[Document], chunk_size=1000, chunk_overlap=0) -> List[Docume
     return text_splitter.split_documents(docs)
 
 
+loaders = {
+    ".pdf": PyPDFLoader,
+    ".docx": UnstructuredWordDocumentLoader,
+    ".md": UnstructuredMarkdownLoader,
+}
+
+
 ## Load and split the files into Documents, may directly use DirectoryLoader
 def load_documents_from_files(documents_directory: str) -> List[Document]:
     print("Loading docs...")
@@ -32,23 +38,16 @@ def load_documents_from_files(documents_directory: str) -> List[Document]:
     files = os.listdir(documents_directory)
     for file in tqdm(files):
         file_path = os.path.join(documents_directory, file)
-        if file.endswith(".pdf"):
-            loader = PyPDFLoader(file_path)
-            pdf_docs = loader.load()
-            chunks = chunk(pdf_docs)
+        file_extension = os.path.splitext(file)[1]
+
+        if file_extension in loaders:
+            loader_class = loaders[file_extension]
+            loader = loader_class(file_path)
+            docs = loader.load()
+            chunks = chunk(docs)
             documents.extend(chunks)
-        elif file.endswith(".docx"):
-            loader = UnstructuredWordDocumentLoader(
-                file_path
-            )  # try UnstructuredWordDocumentLoader as well
-            word_docs = loader.load()
-            chunks = chunk(word_docs)
-            documents.extend(chunks)
-        elif file.endswith((".md")):
-            loader = UnstructuredMarkdownLoader(file_path)
-            md_docs = loader.load()
-            chunks = chunk(md_docs)
-            documents.extend(chunks)
+        else:
+            print(f"Loader for extension {file_extension} not found.")
     print(f"{len(documents)} documents loaded in memory")
     return documents
 
